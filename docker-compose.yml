@@ -8,5 +8,4 @@ services:
       - .:/myapp1
     ports:
       - "8000:8000"
-    # environment:
-    #   - DJANGO_SETTINGS_MODULE=myapp.settings
+    

@@ -3,8 +3,14 @@ from django.urls import path
 from .import views
 
 
+
 urlpatterns = [
-    path('', views.WeatherDataList, name='weather-data-list'),
+    # path('api', views.weather_data_list, name='weather-data-list'),
     # path('Weather', views.Weather, name='Weather'),
-    path('WeatherDataShow', views.WeatherDataShow, name='WeatherDataShow'),
+    # path('Data', views.WeatherDataShow, name='WeatherDataShow'),
+    path('api/', views.fetch_data_view, name='metoffice_data'),
+   
+  
+    
+
 ]

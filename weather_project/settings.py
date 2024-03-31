@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'weather_app',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

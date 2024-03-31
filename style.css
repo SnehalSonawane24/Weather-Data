@@ -1,0 +1,37 @@
+body{
+    background-color: rgb(214, 212, 211);
+}
+.center{
+    text-align: center;
+    text-decoration: underline;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.part {
+    margin: 20px;
+}
+.inline {
+    display: inline-block;
+    vertical-align: middle;
+}
+table{
+    background-color: white;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+}
+tr:hover {background-color: #D6EEEE;}
+th, td {
+    text-align: left;
+    padding: 8px;
+  }
+
+button{
+    background-color: white;
+    border-radius: 10%;
+    width: 150px;
+}

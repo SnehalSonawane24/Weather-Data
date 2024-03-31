@@ -1,38 +1,112 @@
-# weather_api/utils.py
 import requests
-from datetime import datetime
 
-def parse_weather_data(url):
+def scrape_data(region, parameter):
+    url = f"https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/{parameter}/date/{region}.txt"
     response = requests.get(url)
-    lines = response.text.split('\n')
-    data = []
-    for line in lines[2:]:  # Start from the second line
-        values = line.split()
-        if not values or not values[0].isdigit() or len(values) < 18:  # Skip invalid lines
-            continue
-        year = int(values[0])
-        monthly_temperatures = [float(val) if val != '---' else None for val in values[1:13]]
-        seasonal_means = [float(val) if val != '---' else None for val in values[13:17]]
-        annual_mean = float(values[17])
-        data.append({
-            'year': year,
-            'jan': monthly_temperatures[0],
-            'feb': monthly_temperatures[1],
-            'mar': monthly_temperatures[2],
-            'apr': monthly_temperatures[3],
-            'may': monthly_temperatures[4],
-            'jun': monthly_temperatures[5],
-            'jul': monthly_temperatures[6],
-            'aug': monthly_temperatures[7],
-            'sep': monthly_temperatures[8],
-            'oct': monthly_temperatures[9],
-            'nov': monthly_temperatures[10],
-            'dec': monthly_temperatures[11],
-            'winter_mean': seasonal_means[0],
-            'spring_mean': seasonal_means[1],
-            'summer_mean': seasonal_means[2],
-            'autumn_mean': seasonal_means[3],
-            'annual_mean': annual_mean,
-            'last_updated': datetime.now(),
-        })
-    return data
+    if response.status_code == 200:
+        return response.text
+    else:
+        return None
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# management/commands/create_metoffice_settings.py
+
+# from django.core.management.base import BaseCommand
+# from .models import MetOfficeDataSettings
+
+# class Command(BaseCommand):
+#     help = 'Create Met Office Data Settings'
+
+#     def handle(self, *args, **kwargs):
+#         parameters_choices = [choice[0] for choice in MetOfficeDataSettings.PARAMETERS_CHOICES]
+#         region_choices = [choice[0] for choice in MetOfficeDataSettings.REGION_CHOICES]
+#         data_choices = [choice[0] for choice in MetOfficeDataSettings.DATA_CHOICES]
+
+#         for parameter in parameters_choices:
+#             for region in region_choices:
+#                 for data_type in data_choices:
+#                     MetOfficeDataSettings.objects.create(parameters=parameter, region=region, data_type=data_type)
+
+
+
+# import requests
+# from io import StringIO
+# import csv
+# from django.utils import timezone
+# from .models import Region, Year, Month, Parameters, MonthMasterTable
+
+# # Define a function to fetch and parse the data
+# def scrape_and_store_data(url):
+#     response = requests.get(url)
+#     if response.status_code == 200:
+#         # Assuming the data is in CSV format
+#         data = response.text
+
+#         # Use StringIO to convert the string data into a file-like object
+#         csv_file = StringIO(data)
+
+#         # Use CSV reader to parse the data
+#         csv_reader = csv.reader(csv_file, delimiter=',')
+        
+#         # Skip the header row if necessary
+#         next(csv_reader)
+
+#         # Iterate through each row in the CSV data
+#         for row in csv_reader:
+#             # Extract relevant information from the row
+#             region_name = "Northern Ireland"  # Assuming this is the region for the provided URL
+#             year_value = int(row[0])
+#             month_name = row[1].lower()[:3]  # Assuming the month names are abbreviated
+#             parameter_value = float(row[2])
+
+#             # Retrieve or create Region instance
+#             region, _ = Region.objects.get_or_create(name=region_name)
+
+#             # Retrieve or create Year instance
+#             year, _ = Year.objects.get_or_create(year=year_value)
+
+#             # Retrieve or create Month instance
+#             month, _ = Month.objects.get_or_create(name=month_name)
+
+#             # Retrieve or create Parameter instance (if necessary)
+#             parameter_name = "Air Frost"  # Assuming this is the parameter for the provided URL
+#             parameter, _ = Parameters.objects.get_or_create(parameter=parameter_name)
+
+#             # Create MonthMasterTable instance
+#             month_master_instance = MonthMasterTable.objects.create(
+#                 value=parameter_value,
+#                 month=month,
+#                 year=year,
+#                 parameter=parameter,
+#                 region=region
+#             )
+
+#             # Save the instance
+#             month_master_instance.save()
+
+#         print("Data scraped and stored successfully!")
+#     else:
+#         print("Failed to fetch data from the URL")
+
+# # URL to scrape data from
+# url = "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/AirFrost/date/Northern_Ireland.txt"
+
+# # Call the function to scrape and store data
+# scrape_and_store_data(url)

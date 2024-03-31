@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>Weather Data</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+<body>
+    
+        <div class="center">
+            <h1>Weather Data</h1>
+        </div>
+        <hr>
+    <div class="container">
+        <div class="part">
+            <div id="radio-buttons" class="inline">
+                <input type="radio" id="year" name="year" value="year">
+                <label for="year">Year</label><br>
+                <input type="radio" id="month" name="year" value="month">
+                <label for="month">Month</label><br>
+            </div>
+        </div>
+        <div class="part">
+            <label for="regin">Region:</label>
+            <select name="region" id="region" class="inline">
+                <option value="choose_a_region">Choose a Region</option>
+                    <option value="UK">UK</option>
+                    <option value="England">England</option>
+                    <option value="Wales">Wales</option>
+                    <option value="Scotland">Scotland</option>
+                    <option value="Wales">Wales</option>
+                    <option value="NorthernIreland">Northern Ireland</option>
+                    <option value="England&Wales">England & Wales</option>
+                    <option value="EnglandN">England N</option>
+                    <option value="EnglandS">England S</option>
+                    <option value="ScotlandN">Scotland N</option>
+                    <option value="ScotlandS">Scotland S</option>
+                    <option value="ScotlandW">Scotland W</option>
+                    <option value="EnglandE&NE"> England E & NE</option>
+                    <option value="EastAnglia"> East Anglia</option>
+                    <option value="Midlands"> Midlands</option>
+                    <option value="EnglandSW/WalesS"> England SW/Wales S</option>
+                    <option value="EnglandSW/WalesS"> England SE/Central S</option>
+            </select>
+        </div>
+        <div class="part">
+            <label for="parameters" class="inline">Parameters:</label>
+            <select name="Parameters" id="region" class="inline">
+                <option value="chooseParameter">Choose a Parameter</option>
+                <option value="MaxTemp">Max Temp</option>
+                <option value="MinTemp">Min Temp</option>
+                <option value="Mean">Mean</option>
+                <option value="Sunshine">Sunshine</option>
+                <option value="Rainfall">Rainfall</option>
+                <option value="Rain">Rain >= 0.1 mm</option>
+                <option value="DaysForFrost">Days for frost</option>
+            </select>
+        </div>
+        
+    </div>
+    <div class="center">
+        <button type="submit">Download</button>
+    </div>
+    <hr>
+    <table border="1px">
+        <!-- Table content goes here -->
+       
+            <tr>
+                <th>Year</th>
+                <th>January</th>
+                <th>February</th>
+                <th>March</th>
+                <th>April</th>
+                <th>May</th>
+                <th>June</th>
+                <th>July</th>
+                <th>August</th>
+                <th>September</th>
+                <th>October</th>
+                <th>November</th>
+                <th>December</th>
+                <th>Winter</th>
+                <th>Spring</th>
+                <th>Summer</th>
+                <th>Autumn</th>
+                <th>Annum</th> 
+            </tr>
+            <tr>
+                
+            </tr>
+            
+       
+    </table>
+</body>
