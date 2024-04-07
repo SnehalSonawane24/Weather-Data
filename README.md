@@ -1,5 +1,8 @@
-# weather-data
+# historic-weather-data
 Django Application to parse summarised weather data from UK MetOffice and serve it via API.
+<br>
+# problem Statement
+Creating a system to manage weather data effectively. It should gather, store, and analyze weather information, helping predict the weather accurately. This system should be easy to use and ensure the data is reliable and accessible for everyone who needs it.
 <br>
 dataset: https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/UK.txt
 
@@ -9,15 +12,9 @@ dataset: https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/
 
 [API website](https://sujeet123.pythonanywhere.com/)
 
+![image](https://github.com/SnehalSonawane24/Weather-Data/blob/historicWeatherData/Screenshot%20from%202024-04-07%2021-03-28.png?raw=true)
 
+![image](https://github.com/SnehalSonawane24/Weather-Data/blob/historicWeatherData/Screenshot%20from%202024-04-07%2021-03-36.png?raw=true)
 
-![image](https://github.com/Sujeetdeore777/weather-data/assets/118282006/cf2350d9-517f-43b2-9359-cd1c71b873d4)
-
-
-
-[Weather Data](https://sujeet123.pythonanywhere.com/WeatherDataShow)
-
-![image](https://github.com/Sujeetdeore777/weather-data/assets/118282006/f065cebe-e03c-40aa-af6c-49fd82cfc381)
-
-
-![image](https://github.com/Sujeetdeore777/weather-data/assets/118282006/c6533851-ef13-4409-89eb-17ea7a512747)
+![image](https://github.com/SnehalSonawane24/Weather-Data/blob/historicWeatherData/Screenshot%20from%202024-04-07%2021-05-47.png?raw=true
+)
