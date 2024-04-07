@@ -8,9 +8,7 @@ dataset: https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/
 
 
 <br>
-# API
 
-[API website](https://sujeet123.pythonanywhere.com/)
 
 ![image](https://github.com/SnehalSonawane24/Weather-Data/blob/historicWeatherData/Screenshot%20from%202024-04-07%2021-03-28.png?raw=true)
 
