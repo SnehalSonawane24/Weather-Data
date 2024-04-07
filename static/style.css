@@ -1,0 +1,50 @@
+
+
+body {
+    text-align: center; 
+}
+
+h1 {
+    background-color: rgb(71, 71, 83);
+    color: white; 
+    padding: 10px; 
+}
+
+table {
+    margin: 0 auto;
+}
+
+
+
+
+.pagination {
+    display: flex; 
+    justify-content: center; 
+    position: sticky; 
+    bottom: 0px; 
+    background-color: #fff; 
+    padding: 10px; 
+    z-index: 1000; 
+   
+}
+
+.step-links {
+    display: flex; 
+    align-items: center; 
+}
+
+.pagination-link {
+    margin: 0 10px; 
+    color: #007bff;
+    text-decoration: none; 
+}
+
+.pagination-link:hover {
+    text-decoration: underline; 
+}
+
+.current {
+    margin: 0 10px; 
+    font-weight: bold; 
+}
+

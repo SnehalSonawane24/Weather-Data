@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Historic Weather Data</title>
+    <link rel="stylesheet"  href="{% static 'style.css' %}">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        body{
+            background-color: #acdaca;
+                }
+
+        #container {
+            height: 400px;
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .d-none {
+            display: none;
+        }
+        form{
+            height: 25px;
+            
+        }
+
+        .round-button {
+            border-radius: 20px; 
+           background-color: black;
+            color: white;
+            padding: 10px 20px;
+           text-align: center;
+           border: 4px solid #ccc;
+           padding: 7px;
+           width: 102px;
+           
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .round-button:hover {
+            background-color: #333; /* Adjust as needed */
+        }
+
+        select {
+            border-radius: 20px;
+            padding: 7px;
+            border: 4px solid #ccc;
+            width: 102px;
+           
+            margin-bottom: 13px;
+            text-align: center;
+        }
+        .selprm{
+            margin-left: 40px;
+        }
+        #toggleView button{
+            background-color: grey;
+            border: 4px solid #ccc;
+            border-radius: 20px;
+        }
+        #toggleView button:hover{
+            border: 4px solid #ccc;
+            background-color: black;
+            color: white;
+            border-radius: 20px;
+        }
+        
+        .page-link{
+            background-color: grey;
+            color: white;
+            border: 4px solid #ccc;
+            border-radius: 20px;
+        }
+        .page-link:hover{
+            border: 4px solid #ccc;
+            background-color: black;
+            color: white;
+            border-radius: 20px;
+        }
+      
+    </style>
+
+</head>
+<body>
+
+<h1 style="background-color: rgb(54, 172, 172);">Historic Weather Data</h1>
+
+<form method="GET" action="{% url 'api' %}">
+   
+    <label for="region" class="selprm">Select Region:</label>
+    <select name="region" id="region">
+        {% for region in regions %}
+            <option value="{{ region.name }}" {% if region.name == selected_region_id %} selected {% endif %}>{{ region.name }}</option>
+        {% endfor %}
+    </select>
+    
+    <label for="parameter"  class="selprm">Select Parameter:</label>
+    <select name="parameter" id="parameter">
+        {% for parameter in parameters %}
+            <option value="{{ parameter.name }}" {% if parameter.name == selected_parameter_id %} selected {% endif %}>{{ parameter.name }}</option>
+        {% endfor %}
+    </select>
+    
+    <button type="submit" class="round-button selprm">Fetch Data</button>
+
+</form>
+<br>
+<hr>
+<div id="toggleView" style="margin-bottom: 20px;">
+    <button onclick="toggleView('table')" class="btn btn-primary">Table View</button>
+    <button onclick="toggleView('graph')" class="btn btn-primary">Graphical View</button>
+</div>
+
+
+
+
+<table class="table table-striped" id="tableView" style="width: 98%; height: 300px;">
+    <thead class="thead-dark">
+    <tr>
+        <th>Year</th>
+        
+        <th>January</th>
+        <th>February</th>
+        <th>March</th>
+        <th>April</th>
+        <th>May</th>
+        <th>June</th>
+        <th>July</th>
+        <th>August</th>
+        <th>September</th>
+        <th>October</th>
+        <th>November</th>
+        <th>December</th>
+        <th>Winter</th>
+        <th>Spring</th>
+        <th>Summer</th>
+        <th>Autumn</th>
+        <th>Annual</th>
+    </tr>
+    </thead>
+
+
+
+    <tbody>
+    {% if page_obj %}
+    {% for year, data in page_obj %}
+    <tr>
+        <td>{{ year }}</td>
+        <td>{{ data.jan }}</td>
+        <td>{{ data.feb }}</td>
+        <td>{{ data.mar }}</td>
+        <td>{{ data.apr }}</td>
+        <td>{{ data.may }}</td>
+        <td>{{ data.jun }}</td>
+        <td>{{ data.jul }}</td>
+        <td>{{ data.aug }}</td>
+        <td>{{ data.sep }}</td>
+        <td>{{ data.oct }}</td>
+        <td>{{ data.nov }}</td>
+        <td>{{ data.dec }}</td>
+        <td>{{ data.win }}</td>
+        <td>{{ data.spr }}</td>
+        <td>{{ data.sum }}</td>
+        <td>{{ data.aut }}</td>
+        <td>{{ data.ann }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+
+<div class="pagination" id="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?region={{ selected_region_id }}&parameter={{ selected_parameter_id }}&page=1" class="page-link">&laquo; First</a>
+            <a href="?region={{ selected_region_id }}&parameter={{ selected_parameter_id }}&page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+        {% endif %}
+
+        <span class="current-page">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?region={{ selected_region_id }}&parameter={{ selected_parameter_id }}&page={{ page_obj.next_page_number }}" class="page-link" >Next</a>
+            <a href="?region={{ selected_region_id }}&parameter={{ selected_parameter_id }}&page={{ page_obj.paginator.num_pages }}" class="page-link">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<div id="container" class="d-none"></div>
+
+
+
+
+<script>
+    function toggleView(view) {
+        if (view === 'table') {
+            document.getElementById('tableView').classList.remove('d-none');
+            document.getElementById('container').classList.add('d-none');
+            document.getElementById('pagination').classList.remove('d-none'); // Show pagination for table view
+
+
+        } else if (view === 'graph') {
+            document.getElementById('tableView').classList.add('d-none');
+            document.getElementById('container').classList.remove('d-none');
+            document.getElementById('pagination').classList.add('d-none'); // Hide pagination for graph view
+        }
+    }
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var data = [
+            {% for year, monthly_data in yearly_monthly_data.items %}
+                { year: {{ year }}, {% for month, value in monthly_data.items %} {{ month }}: {{ value }}, {% endfor %} },
+            {% endfor %}
+        ];
+    
+        var parameter = "{{ selected_parameter_id }}"; 
+    
+        var seriesData = [];
+    
+      
+        var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+        months.forEach(function(month) {
+            var monthData = data.map(item => item[month]);
+            var series = {
+                name: month.toUpperCase(),
+                data: monthData
+            };
+            if (parameter === 'Rainfall') {
+                series.type = 'column';
+            } else {
+                series.type = 'line';
+                series.marker = { symbol: 'circle' };
+            }
+            seriesData.push(series);
+        });
+    
+        Highcharts.chart('container', {
+            chart: {
+                type: parameter === 'Rainfall' ? 'column' : 'line'
+            },
+            title: {
+                text: parameter === 'Rainfall' ? 'Monthly Rainfall Data' : 'Monthly Weather Data'
+            },
+            xAxis: {
+                title: {
+                    text: 'Year'
+                },
+                categories: data.map(item => item.year)
+            },
+            yAxis: {
+                title: {
+                    text: 'temp'
+                }
+            },
+            rangeSelector: {
+                enabled: true,
+                inputEnabled: true,
+                buttons: [{
+                    type: 'year',
+                    count: 1,
+                    text: '1y'
+                }, {
+                    type: 'year',
+                    count: 5,
+                    text: '5y'
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }],
+                selected: 0 
+            series: seriesData
+        });
+    });
+</script>
+
+</body>
+</html>
